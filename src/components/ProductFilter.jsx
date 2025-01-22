@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa"; // Import icons for mobile toggle
+import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function ProductFilter({ filters, setFilters }) {
-  const categories = ["mens-watches", "womens-watches"]; // Use actual categories from your API response
+  const categories = ["mens-watches", "womens-watches"]; 
   const priceRanges = [
     { label: "Under $20", min: 0, max: 20 },
     { label: "$20 - $50", min: 20, max: 50 },
@@ -10,19 +10,19 @@ export default function ProductFilter({ filters, setFilters }) {
     { label: "Over $100", min: 100, max: Infinity },
   ];
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false); // State to control drawer visibility
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false); 
 
   const handleCategoryChange = (category) => {
     setFilters((prev) => ({
       ...prev,
-      category: prev.category === category ? null : category, // Toggle category
+      category: prev.category === category ? null : category, 
     }));
   };
 
   const handlePriceChange = (priceRange) => {
     setFilters((prev) => ({
       ...prev,
-      priceRange: prev.priceRange === priceRange ? null : priceRange, // Toggle price range
+      priceRange: prev.priceRange === priceRange ? null : priceRange, 
     }));
   };
 
@@ -33,7 +33,7 @@ export default function ProductFilter({ filters, setFilters }) {
 
   return (
     <div className="relative">
-      {/* Hamburger icon for mobile */}
+      
       <button
         className="sm:hidden text-2xl text-blue-800  p-1"
         onClick={toggleDrawer}
@@ -41,7 +41,7 @@ export default function ProductFilter({ filters, setFilters }) {
         <FaBars />
       </button>
 
-      {/* Drawer for filters on mobile */}
+      
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-all duration-300 ${
           isDrawerOpen ? "block" : "hidden"
@@ -53,12 +53,7 @@ export default function ProductFilter({ filters, setFilters }) {
             isDrawerOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          {/* <button
-            className="absolute top-4 right-4 text-3xl text-blue-900"
-            onClick={toggleDrawer}
-          >
-            <FaTimes />
-          </button> */}
+          
 
           <h3 className="font-bold text-lg mb-6 text-blue-900">Filters</h3>
 

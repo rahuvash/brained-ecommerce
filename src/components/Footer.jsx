@@ -1,7 +1,7 @@
 // src/components/Footer.jsx
 import React from "react";
 
-export default function Footer() {
+const Footer = () =>{
   return (
     <footer className="bg-neutral-dark text-neutral-light py-6">
       <div className="container mx-auto text-center">
@@ -18,3 +18,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default Footer;

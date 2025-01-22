@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaTrashAlt } from "react-icons/fa";
 import { removeFromCart, updateCartItemQuantity } from "../redux/cartSlice";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion"; // Import motion from Framer Motion
+import { motion } from "framer-motion"; 
 
 const CartPage = () => {
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const handleRemoveItem = (productId) => {
-    dispatch(removeFromCart({ id: productId })); // Pass an object with id
+    dispatch(removeFromCart({ id: productId })); 
   };
 
   const handleQuantityChange = (productId, newQuantity) => {
@@ -22,7 +22,7 @@ const CartPage = () => {
   const calculateTotal = () => {
     return cart
       .reduce((acc, item) => acc + item.price * item.quantity, 0)
-      .toFixed(2); // returns the total price of items in the cart
+      .toFixed(2); 
   };
 
   return (
@@ -66,7 +66,7 @@ const CartPage = () => {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  {/* Quantity */}
+                  
                   <div className="flex items-center space-x-2">
                     <motion.button
                       onClick={() =>
@@ -91,7 +91,7 @@ const CartPage = () => {
                     </motion.button>
                   </div>
 
-                  {/* Remove Button */}
+             
                   <motion.button
                     onClick={() => handleRemoveItem(item.id)}
                     className="text-red-600 hover:text-red-800 transition-colors"
@@ -115,14 +115,14 @@ const CartPage = () => {
             <h3 className="text-xl font-semibold">
               Total: ${calculateTotal()}
             </h3>
-            <motion.Link
+            <Link
               to="/checkout"
               className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition-colors"
               whileHover={{ scale: 1.1 }} // Hover effect for button
               transition={{ duration: 0.2 }}
             >
               Proceed to Checkout
-            </motion.Link>
+            </Link>
           </motion.div>
         </motion.div>
       )}

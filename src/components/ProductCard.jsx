@@ -4,11 +4,11 @@ import { MdRemoveShoppingCart } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion"; // Import motion from Framer Motion
+import { motion } from "framer-motion"; 
 
 const ProductCard = ({ product }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { cart } = useSelector((state) => state.cart); // Get cart items from Redux store
+  const { cart } = useSelector((state) => state.cart); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,18 +17,18 @@ const ProductCard = ({ product }) => {
       ? product.title.substring(0, 15) + "..."
       : product.title;
 
-  // Find the product in the cart
+  
   const cartItem = cart.find((item) => item.id === product.id);
   const isInCart = cartItem !== undefined;
   const cartQuantity = isInCart ? cartItem.quantity : 0;
 
   const handleAddToCart = () => {
     if (isLoggedIn) {
-      // If the product is already in the cart, increase the quantity
+      
       if (isInCart) {
-        dispatch(addToCart({ ...product, quantity: 1 })); // Add one more unit to the cart
+        dispatch(addToCart({ ...product, quantity: 1 })); 
       } else {
-        dispatch(addToCart({ ...product, quantity: 1 })); // Add product to cart
+        dispatch(addToCart({ ...product, quantity: 1 })); 
       }
     } else {
       console.log("Please log in first.");
@@ -37,7 +37,7 @@ const ProductCard = ({ product }) => {
 
   const handleRemoveFromCart = () => {
     if (isInCart) {
-      dispatch(removeFromCart(product)); // Remove the product from the cart
+      dispatch(removeFromCart(product)); 
     }
   };
 
@@ -65,7 +65,7 @@ const ProductCard = ({ product }) => {
       <p className="text-sm text-gray-500">{product.category}</p>
       <p className="text-xl font-bold mt-2 text-blue-600">${product.price}</p>
 
-      {/* Buttons for Add to Cart and Details */}
+      
       <div className="mt-4 flex justify-between items-center">
         <motion.button
           onClick={handleAddToCart}
@@ -77,7 +77,7 @@ const ProductCard = ({ product }) => {
               ? "bg-blue-600 hover:bg-blue-700"
               : "bg-gray-400 cursor-not-allowed"
           } text-white p-2 rounded-full w-2/3 flex items-center justify-center`}
-          whileHover={{ scale: 1.1 }} // Hover effect to scale button slightly
+          whileHover={{ scale: 1.1 }} 
           transition={{ duration: 0.2 }}
         >
           <FaShoppingCart size={20} />
@@ -87,7 +87,7 @@ const ProductCard = ({ product }) => {
           <motion.button
             onClick={handleRemoveFromCart}
             className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full ml-2 flex items-center justify-center"
-            whileHover={{ scale: 1.1 }} // Hover effect to scale button slightly
+            whileHover={{ scale: 1.1 }} 
             transition={{ duration: 0.2 }}
           >
             <MdRemoveShoppingCart />
@@ -96,7 +96,7 @@ const ProductCard = ({ product }) => {
         <motion.button
           onClick={handleDetailsClick}
           className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full ml-2 flex items-center justify-center"
-          whileHover={{ scale: 1.1 }} // Hover effect to scale button slightly
+          whileHover={{ scale: 1.1 }} 
           transition={{ duration: 0.2 }}
         >
           <FaEye size={20} />

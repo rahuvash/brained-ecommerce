@@ -12,10 +12,10 @@ const cartSlice = createSlice({
       const productExists = state.cart.find((item) => item.id === action.payload.id);
 
       if (productExists) {
-        // Update the quantity if the product already exists
+       
         productExists.quantity += action.payload.quantity;
       } else {
-        // Add new product to cart
+        
         state.cart.push({ ...action.payload, quantity: action.payload.quantity || 1 });
       }
     },
@@ -29,7 +29,7 @@ const cartSlice = createSlice({
       }
     },
     clearCart: (state) => {
-        state.cart = []; // Clear the cart
+        state.cart = []; 
       },
   },
 });

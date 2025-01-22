@@ -1,13 +1,13 @@
-// src/components/LoginForm.jsx
+
 import React, { useState, useRef } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Loader from "../components/Loader"; // Import the loader component
+import Loader from "../components/Loader"; 
 import { login } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
-import { motion } from "framer-motion"; // Import motion for animations
+import { motion } from "framer-motion"; 
 
 const LoginForm = () =>{
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const LoginForm = () =>{
   const validateForm = ({ name, value }) => {
     let error = "";
 
-    // Username Validation (should be lowercase with no spaces)
+    
     if (name === "username") {
       if (!/^[a-z0-9]+$/.test(value)) {
         error = "Username must be lowercase and contain no spaces.";
