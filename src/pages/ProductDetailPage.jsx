@@ -32,11 +32,14 @@ export default function ProductDetailPage() {
     };
     fetchProductDetails();
   }, [productId]);
-  console.log("cart:",cart)
-  const cartItem = cart.find((item) => item.id === productId);
+ 
+  const cartItem = cart.find((item) => {
+   
+    return String(item.id) === productId; 
+  });
+
   const isInCart = cartItem !== undefined;
-  console.log("item id:",productId)
-  console.log("is in cart:",isInCart  )
+
   const cartQuantity = isInCart ? cartItem.quantity : 0;
 
   const handleAddToCart = () => {
