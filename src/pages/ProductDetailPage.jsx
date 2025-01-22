@@ -35,6 +35,7 @@ export default function ProductDetailPage() {
 
   const cartItem = cart.find((item) => item.id === productId);
   const isInCart = cartItem !== undefined;
+  console.log("is in cart:",isInCart  )
   const cartQuantity = isInCart ? cartItem.quantity : 0;
 
   const handleAddToCart = () => {
