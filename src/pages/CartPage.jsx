@@ -26,7 +26,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 min-h-screen">
       <h1 className="text-3xl font-bold text-center text-blue-600 mb-8">
         Your Cart
       </h1>

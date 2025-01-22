@@ -1,45 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios"; // Importing axios for API call
-import { motion } from "framer-motion"; // Import motion from Framer Motion
+import axios from "axios";
+import { motion } from "framer-motion";
+import { FaShoppingCart } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
 
 export default function ProductDetailPage() {
-  const { productId } = useParams(); // Get the productId from the URL
-  const [product, setProduct] = useState(null); // State to hold product data
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const { productId } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const { cart } = useSelector((state) => state.cart);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // Fetch product details when component mounts
     const fetchProductDetails = async () => {
       try {
         const response = await axios.get(
           `https://api.freeapi.app/api/v1/public/randomproducts/${productId}`,
-          {
-            headers: { accept: "application/json" },
-          }
+          { headers: { accept: "application/json" } }
         );
-        setProduct(response.data.data); // Set product data
+        setProduct(response.data.data);
       } catch (err) {
-        setError("Failed to fetch product details."); // Set error if any
+        setError("Failed to fetch product details.");
       } finally {
-        setLoading(false); // Set loading to false once the request is complete
+        setLoading(false);
       }
     };
-
     fetchProductDetails();
-  }, [productId]); // Re-fetch product details if productId changes
+  }, [productId]);
+
+  const cartItem = cart.find((item) => item.id === productId);
+  const isInCart = cartItem !== undefined;
+  const cartQuantity = isInCart ? cartItem.quantity : 0;
+
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch(addToCart({ ...product, quantity: 1 }));
+    }
+  };
 
   if (loading) {
-    return <div className="p-6 text-center">Loading...</div>; // Show loading message
+    return <div className="p-6 text-center">Loading...</div>;
   }
 
   if (error) {
-    return <div className="p-6 text-center text-red-500">{error}</div>; // Show error message
+    return <div className="p-6 text-center text-red-500">{error}</div>;
   }
 
   if (!product) {
-    return <div className="p-6 text-center">Product not found.</div>; // Show message if no product found
+    return <div className="p-6 text-center">Product not found.</div>;
   }
 
   return (
@@ -115,11 +128,19 @@ export default function ProductDetailPage() {
 
           {/* Add to Cart button */}
           <motion.button
-            className="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-lg"
+            onClick={handleAddToCart}
+            className={`${
+              isInCart
+                ? "bg-green-600 hover:bg-green-700"
+                : isLoggedIn
+                ? "bg-blue-600 hover:bg-blue-700"
+                : "bg-gray-400 cursor-not-allowed"
+            } text-white font-bold py-3 px-6 rounded-lg flex items-center justify-center`}
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.2 }}
           >
-            Add to Cart
+            <FaShoppingCart size={20} className="mr-2" />
+            {isInCart ? ` (${cartQuantity})` : "Add to Cart"}
           </motion.button>
         </div>
       </motion.div>
