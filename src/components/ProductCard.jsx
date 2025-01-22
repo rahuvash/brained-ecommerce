@@ -1,9 +1,10 @@
 import React from "react";
-import { FaEye, FaRemoveFormat, FaShoppingCart } from "react-icons/fa";
+import { FaEye, FaShoppingCart } from "react-icons/fa";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../redux/cartSlice"; // Import the actions
+import { addToCart, removeFromCart } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion"; // Import motion from Framer Motion
 
 const ProductCard = ({ product }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -45,11 +46,20 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="border border-gray-200 p-4 rounded-lg shadow-lg relative overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105">
-      <img
+    <motion.div
+      className="border border-gray-200 p-4 rounded-lg shadow-lg relative overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.img
         src={product.thumbnail}
         alt={product.title}
         className="w-full h-64 object-cover rounded-lg mb-4"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       />
       <h3 className="text-lg font-semibold text-gray-800">{truncatedTitle}</h3>
       <p className="text-sm text-gray-500">{product.category}</p>
@@ -57,9 +67,9 @@ const ProductCard = ({ product }) => {
 
       {/* Buttons for Add to Cart and Details */}
       <div className="mt-4 flex justify-between items-center">
-        <button
+        <motion.button
           onClick={handleAddToCart}
-          disabled={!isLoggedIn} // Disable if not logged in
+          disabled={!isLoggedIn}
           className={`${
             isInCart
               ? "bg-green-600 hover:bg-green-700"
@@ -67,26 +77,32 @@ const ProductCard = ({ product }) => {
               ? "bg-blue-600 hover:bg-blue-700"
               : "bg-gray-400 cursor-not-allowed"
           } text-white p-2 rounded-full w-2/3 flex items-center justify-center`}
+          whileHover={{ scale: 1.1 }} // Hover effect to scale button slightly
+          transition={{ duration: 0.2 }}
         >
           <FaShoppingCart size={20} />
-          {isInCart ? ` (${cartQuantity})` :""} 
-        </button>
+          {isInCart ? ` (${cartQuantity})` : ""}
+        </motion.button>
         {isInCart && (
-          <button
+          <motion.button
             onClick={handleRemoveFromCart}
             className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full ml-2 flex items-center justify-center"
+            whileHover={{ scale: 1.1 }} // Hover effect to scale button slightly
+            transition={{ duration: 0.2 }}
           >
-            <MdRemoveShoppingCart/>
-          </button>
+            <MdRemoveShoppingCart />
+          </motion.button>
         )}
-        <button
+        <motion.button
           onClick={handleDetailsClick}
           className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full ml-2 flex items-center justify-center"
+          whileHover={{ scale: 1.1 }} // Hover effect to scale button slightly
+          transition={{ duration: 0.2 }}
         >
           <FaEye size={20} />
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

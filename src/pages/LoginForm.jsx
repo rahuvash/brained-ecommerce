@@ -1,3 +1,4 @@
+// src/components/LoginForm.jsx
 import React, { useState, useRef } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,9 +7,10 @@ import axios from "axios";
 import Loader from "../components/Loader"; // Import the loader component
 import { login } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion"; // Import motion for animations
 
-export default function LoginForm() {
-  const dispatch = useDispatch()
+const LoginForm = () =>{
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -116,13 +118,21 @@ export default function LoginForm() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-50">
       <ToastContainer />
-      <form
+      <motion.form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg p-8 max-w-md w-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
       >
         <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">Login</h2>
 
-        <div className="mb-4">
+        <motion.div
+          className="mb-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
             Username
           </label>
@@ -140,9 +150,14 @@ export default function LoginForm() {
           {errors.username && (
             <p className="text-red-500 text-sm mt-1">{errors.username}</p>
           )}
-        </div>
+        </motion.div>
 
-        <div className="mb-6">
+        <motion.div
+          className="mb-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
           <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
             Password
           </label>
@@ -160,17 +175,21 @@ export default function LoginForm() {
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">{errors.password}</p>
           )}
-        </div>
+        </motion.div>
 
-        <button
+        <motion.button
           type="submit"
           className={`w-full py-3 px-4 rounded-lg font-bold text-white ${
             loading ? "bg-blue-300" : "bg-blue-600 hover:bg-blue-700"
           }`}
           disabled={loading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
         >
           {loading ? <Loader /> : "Login"}
-        </button>
+        </motion.button>
+
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
             Don't have an account?{" "}
@@ -182,7 +201,9 @@ export default function LoginForm() {
             </span>
           </p>
         </div>
-      </form>
+      </motion.form>
     </div>
   );
 }
+
+export default LoginForm  ;

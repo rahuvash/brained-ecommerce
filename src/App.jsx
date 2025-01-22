@@ -11,6 +11,8 @@ import Footer from "./components/Footer";
 import { useDispatch } from "react-redux";
 import { setUser } from "./redux/authSlice";
 import CartPage from "./pages/CartPage";
+import NotFound from "./pages/NotFound";
+
 
 
 
@@ -43,6 +45,7 @@ export default function App() {
         <Route path="/products" element={<ProductListingPage />} />
         <Route path="/products/:productId" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer/> 
     </Router>

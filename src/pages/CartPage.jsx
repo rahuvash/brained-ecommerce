@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaTrashAlt } from "react-icons/fa";
 import { removeFromCart, updateCartItemQuantity } from "../redux/cartSlice";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion"; // Import motion from Framer Motion
 
 const CartPage = () => {
   const { cart } = useSelector((state) => state.cart);
@@ -38,12 +39,20 @@ const CartPage = () => {
           </Link>
         </div>
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {cart.map((item) => (
-              <div
+              <motion.div
                 key={item.id}
                 className="flex items-center justify-between border p-4 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5 }}
               >
                 <img
                   src={item.thumbnail}
@@ -59,50 +68,63 @@ const CartPage = () => {
                 <div className="flex items-center space-x-4">
                   {/* Quantity */}
                   <div className="flex items-center space-x-2">
-                    <button
+                    <motion.button
                       onClick={() =>
                         handleQuantityChange(item.id, item.quantity - 1)
                       }
                       className="bg-gray-300 hover:bg-gray-400 px-2 py-1 rounded-full transition-colors"
+                      whileHover={{ scale: 1.1 }} // Hover effect for button
+                      transition={{ duration: 0.2 }}
                     >
                       -
-                    </button>
+                    </motion.button>
                     <span className="text-lg font-semibold">{item.quantity}</span>
-                    <button
+                    <motion.button
                       onClick={() =>
                         handleQuantityChange(item.id, item.quantity + 1)
                       }
                       className="bg-gray-300 hover:bg-gray-400 px-2 py-1 rounded-full transition-colors"
+                      whileHover={{ scale: 1.1 }} // Hover effect for button
+                      transition={{ duration: 0.2 }}
                     >
                       +
-                    </button>
+                    </motion.button>
                   </div>
 
                   {/* Remove Button */}
-                  <button
+                  <motion.button
                     onClick={() => handleRemoveItem(item.id)}
                     className="text-red-600 hover:text-red-800 transition-colors"
+                    whileHover={{ scale: 1.1 }} // Hover effect for button
+                    transition={{ duration: 0.2 }}
                   >
                     <FaTrashAlt size={20} />
-                  </button>
+                  </motion.button>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Total and Checkout */}
-          <div className="mt-8 flex justify-between items-center">
+          <motion.div
+            className="mt-8 flex justify-between items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <h3 className="text-xl font-semibold">
               Total: ${calculateTotal()}
             </h3>
-            <Link
+            <motion.Link
               to="/checkout"
               className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition-colors"
+              whileHover={{ scale: 1.1 }} // Hover effect for button
+              transition={{ duration: 0.2 }}
             >
               Proceed to Checkout
-            </Link>
-          </div>
-        </div>
+            </motion.Link>
+          </motion.div>
+        </motion.div>
       )}
     </div>
   );

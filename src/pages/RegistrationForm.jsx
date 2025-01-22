@@ -4,8 +4,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader"; // Import the loader component
+import { motion } from "framer-motion"; // Import Framer Motion
 
-export default function RegistrationForm() {
+const RegistrationForm = () =>{
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -110,20 +111,34 @@ export default function RegistrationForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-50">
+    <motion.div
+      className="flex items-center justify-center min-h-screen bg-blue-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <ToastContainer />
-      <form
+      <motion.form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg p-8 max-w-md w-full"
+        initial={{ y: -50 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
       >
         <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">
           Register
         </h2>
-        <div className="mb-4">
+        <motion.div
+          className="mb-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
           <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
             Username
           </label>
-          <input
+          <motion.input
             type="text"
             id="username"
             name="username"
@@ -131,16 +146,24 @@ export default function RegistrationForm() {
             onChange={handleChange}
             className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter your username"
+            initial={{ x: -20 }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.3 }}
           />
           {errors.username && (
             <p className="text-red-500 text-sm mt-1">{errors.username}</p>
           )}
-        </div>
-        <div className="mb-4">
+        </motion.div>
+        <motion.div
+          className="mb-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
           <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
             Email
           </label>
-          <input
+          <motion.input
             type="email"
             id="email"
             name="email"
@@ -150,14 +173,22 @@ export default function RegistrationForm() {
               errors.email ? "focus:ring-red-400" : "focus:ring-blue-400"
             }`}
             placeholder="Enter your email"
+            initial={{ x: -20 }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.3 }}
           />
           {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-        </div>
-        <div className="mb-6">
+        </motion.div>
+        <motion.div
+          className="mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
           <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
             Password
           </label>
-          <input
+          <motion.input
             type="password"
             id="password"
             name="password"
@@ -167,20 +198,26 @@ export default function RegistrationForm() {
               errors.password ? "focus:ring-red-400" : "focus:ring-blue-400"
             }`}
             placeholder="Create a password"
+            initial={{ x: -20 }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.3 }}
           />
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">{errors.password}</p>
           )}
-        </div>
-        <button
+        </motion.div>
+        <motion.button
           type="submit"
           className={`w-full py-3 px-4 rounded-lg font-bold text-white ${
             loading ? "bg-blue-300" : "bg-blue-600 hover:bg-blue-700"
           }`}
           disabled={loading}
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.3 }}
         >
           {loading ? <Loader /> : "Register"}
-        </button>
+        </motion.button>
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
             Already a user?{" "}
@@ -192,7 +229,9 @@ export default function RegistrationForm() {
             </span>
           </p>
         </div>
-      </form>
-    </div>
+      </motion.form>
+    </motion.div>
   );
 }
+
+export default RegistrationForm;
