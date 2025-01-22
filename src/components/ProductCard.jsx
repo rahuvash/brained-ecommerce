@@ -12,8 +12,8 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   const truncatedTitle =
-    product.title.length > 20
-      ? product.title.substring(0, 20) + "..."
+    product.title.length > 15
+      ? product.title.substring(0, 15) + "..."
       : product.title;
 
   // Find the product in the cart
